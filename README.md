@@ -1,7 +1,8 @@
 # Probabilistic Recombinant Finder (Precfinder)
 
 ## Description
-Precfinder is a tool to identify SARS-CoV-2 recombinants. Rrecfinder is still on a very early stage and it could suffer drastic changes in the future.  
+Precfinder is a tool to identify SARS-CoV-2 recombinants.    
+Note that Rrecfinder is still on a very early stage and it could suffer drastic changes in the future.  
 
 ## Instructions
 
