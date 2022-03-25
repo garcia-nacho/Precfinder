@@ -7,15 +7,15 @@ Precfinder is a tool to identify SARS-CoV-2 recombinants. Rrecfinder is still on
 
 1. Clone the Precfinder repo 
 
-git clone https://github.com/garcia-nacho/Precfinder
+<code>git clone https://github.com/garcia-nacho/Precfinder</code>
 
 2. Save a multifasta file with the sequences that you want to test inside the folder Precfinder/Inference
 
-cp Sequences.fa Precfinder/Inference 
+<code>cp Sequences.fa Precfinder/Inference </code>
 
 3. Run the script Inference.sh inside the Precfinder folder
 
-cd Precfinder && ./Inference.sh
+<code>cd Precfinder && ./Inference.sh</code>
 
 Inside the /Precfinder/Inference folder you will find three new files
 XXX
