@@ -18,7 +18,10 @@ Note that Rrecfinder is still on a very early stage and it could suffer drastic 
 
 <code>cd Precfinder && ./Inference.sh</code>
 
-Inside the /Precfinder/Inference folder you will find three new files
+
+## Output
+
+After finishing the script will save three new files inside the Precfinder/Inference folder
 XXX
 XXX
 XXX
