@@ -1,1 +1,1 @@
-# Precfinder (aka. Probabilistic Recombinant Finder)
+# Probabilistic Recombinant Finder (Precfinder)
