@@ -10,7 +10,7 @@ Note that Rrecfinder is still on a very early stage and it could suffer drastic 
 
 <code>git clone https://github.com/garcia-nacho/Precfinder</code>
 
-2. Save a multifasta file with the sequences that you want to test inside the folder Precfinder/Inference
+2. Copy a multifasta file with the sequences that you want to test inside the folder Precfinder/Inference
 
 <code>cp Sequences.fa Precfinder/Inference </code>
 
