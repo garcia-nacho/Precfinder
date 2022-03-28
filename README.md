@@ -13,7 +13,7 @@ Note that Rrecfinder is still on a very early stage, it will be buggy and it cou
 
 2. Install it  
 
-<code>cd Precfinder && ./Install.sh</code>
+<code>Precfinder/Install.sh</code>
 
 3. Copy your multifasta file inside the Precfinder/Inference folder and run Precfinder 
 
