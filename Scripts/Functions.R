@@ -567,7 +567,7 @@ cnn.training<- function(training.set, modelid){
 # ML Inference ------------------------------------------------------------
 ml.inference<-function(inference.set, model, model.id){
   
-  size.file<-list.files(paste("/Models/", model.id), pattern = "_InputSize.csv", full.names = TRUE)
+  size.file<-list.files(paste("/Models/", model.id,sep = ""), pattern = "_InputSize.csv", full.names = TRUE)
   size.dataset<-read.csv(size.file)
   
   labels.to.test<- names(inference.set$Probs)
