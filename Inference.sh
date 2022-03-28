@@ -1,0 +1,1 @@
+docker run -it --rm -v $(pwd)/Inference:/Inference -v $(pwd)/Models/:/Models garcianacho/recfinder Rscript /home/docker/Scripts/Inference.R
