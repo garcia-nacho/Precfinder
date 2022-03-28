@@ -1,8 +1,9 @@
 # Probabilistic Recombinant Finder (Precfinder)
 
 ## Description
-Precfinder is a tool to identify SARS-CoV-2 recombinants.    
-Note that Rrecfinder is still on a very early stage and it could suffer drastic changes in the future.  
+Precfinder is a tool to identify SARS-CoV-2 recombinants.
+Precfinder is distributed as docker image with some wrapping scripts to install it, run it or to train additional models.
+Note that Rrecfinder is still on a very early stage, it will be buggy and it could suffer drastic changes in the future.
 
 ## Instructions
 
@@ -10,29 +11,41 @@ Note that Rrecfinder is still on a very early stage and it could suffer drastic 
 
 <code>git clone https://github.com/garcia-nacho/Precfinder</code>
 
-2. Copy a multifasta file with the sequences that you want to test inside the folder Precfinder/Inference
+2. Install it  
 
-<code>cp Sequences.fa Precfinder/Inference </code>
+<code>cd Precfinder && ./Install.sh</code>
 
-3. Run the script Inference.sh inside the Precfinder folder
+3. Copy your multifasta file inside the Precfinder/Inference folder and run Precfinder 
 
-<code>cd Precfinder && ./Inference.sh</code>
+<code>./Inference.sh</code>
 
 
 ## Output
 
-After finishing the script will save three new files inside the Precfinder/Inference folder
-XXX
-XXX
-XXX
+Precfinder will save five new files inside the Precfinder/Inference folder:   
 
-The file XXX includes the output of nextclade and pangolin for each sequence
-The file XXX includes recombinant prediction. The score ranges from 0 to 1, the closer it is to one the most likely for the sequence to be a recombinant.
-The file XXX includes a plot that visualizes the different mutations found in the sequence and the conditional probability for the different lineages.
+*Recombinant_Prediction.xlsx*   
+*Recombinant_PredictionwPango.xlsx*   
+*Inference_dataset.csv*   
+*Date_RecombinantPlots.pdf*   
+*Date_RecombinantSelected.pdf*   
+
+*Recombinant_Prediction* contains the recombinant prediction for each sequence. Including two classes (Recombinant/Non Recombinant) and a prediction score. The closer the score to 1 or to 0, the most sure the model about the classification. **It is NOT a probabilistic score.**. There is a third column to display some warnings (e.g. the absence of observed mutations on the training set, the presence of too many mutations, etc)        
+
+*Recombinant_PredictionwPango.xlsx* same as above but it includes pangolin lineage.  
+
+*Inference_dataset.csv* is a temporary file that contains nextclade output alonside pangolin lineage. Note that the insertions and deletions have been reencoded (i.e. D123C is a deletion of 3 nucleotides on the position 123, I1200F is the insertion of 6 nucleotides on the position 1200) and included under the column substitutions.   
+
+*Date_RecombinantPlots.pdf* contains a plot for each of the sequences present on the multifasta file.
+
+*Date_RecombinantSelected.pdf* contains a plot for each sequence predicted to be a recombinant.  
+
+## Interpreting the plots
+
+The pdfs contains plots similar to this one: 
 
 
 ## Advanced Instructions
-
 
 ## Under the hood
 
