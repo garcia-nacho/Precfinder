@@ -13,7 +13,7 @@ resultsInference<-P.calculator(input.data = inference.raw, mutation.table = muta
 
 model.file<-mutation.table.file<-list.files(paste("/Models/", args[1],sep = ""), pattern = ".*.hdf5", full.names = TRUE)
 model<-load_model_hdf5(model.file)
-results.out<-ml.inference(inference.set = resultsInference, model = model )
+results.out<-ml.inference(inference.set = resultsInference, model = model ,model.id=args[1])
 
 library(writexl)
 write_xlsx(results.out,"/Inference/Recombinant_Prediction.xlsx")

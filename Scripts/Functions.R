@@ -413,7 +413,7 @@ close(pb)
 } 
 
 # MLCNN -------------------------------------------------------------------
-cnn.training<- function(training.set){
+cnn.training<- function(training.set, modelid){
   testCNN<-training.set$Probs
   mut.n<-unlist(lapply(testCNN, function(x) length(x$Mutation)))
   lin<-unique(mutation.table$Lineage)
@@ -470,7 +470,7 @@ cnn.training<- function(training.set){
   
   size.dataset<-as.data.frame(c(dim(train.array)[2], lin))
   colnames(size.dataset)<-"Parameters"
-  write.csv(size.dataset, paste("/Models/",gsub("-","",Sys.Date()),"_InputSize.csv",sep = ""))
+  write.csv(size.dataset, paste("/Models/",modelid,"/",gsub("-","",Sys.Date()),"_InputSize.csv",sep = ""))
   #Split validation
   val.index<-sample(1:dim(train.array)[1], round(dim(train.array)[1]/10))
   val.array<-train.array[val.index,,]
@@ -547,46 +547,27 @@ cnn.training<- function(training.set){
     geom_text(aes(Observed, Predicted, label=Value), col="white")+
     theme_minimal()+
     ggtitle(paste("Balanced Accuracy:", round(BA,3)))
-  ggsave(paste("/Models/",gsub("-","",Sys.Date()),"_Model_CM.pdf",sep = ""), width = 4, height = 4)
+  ggsave(paste("/Models/",modelid,"/",gsub("-","",Sys.Date()),"_Model_CM.pdf",sep = ""), width = 4, height = 4)
   
   plot(history)+
     theme_minimal()+
     ggtitle(paste("Training process Model",gsub("-","",Sys.Date()) ,sep=""))
-  ggsave(paste("/Models/",gsub("-","",Sys.Date()),"_Model_Training.pdf",sep = ""), width = 4, height = 6)
+  ggsave(paste("/Models/",modelid,"/",gsub("-","",Sys.Date()),"_Model_Training.pdf",sep = ""), width = 4, height = 6)
   
-  
-  # if(length(c(which(predictions$V2>0.5 &  predictions$Observed=="Recombinant"),which(predictions$V1>0.5 &  predictions$Observed=="Non-Recombinant")))>0){
-  #   
-  #   errorpl<-training.set$Plots[c(which(predictions$V2>0.5 &  predictions$Observed=="Recombinant"),
-  #                         which(predictions$V1>0.5 &  predictions$Observed=="Non-Recombinant")),]
-  #   ggarrange(plotlist = errorpl[c(1:min(40, length(errorpl)))], ncol = 4, nrow = 10)
-  #   ggsave(paste("/Models/",gsub("-","",Sys.Date()),"_Model_ErrorExamples.pdf",sep = ""), width = 15, height = 30)
-  # }
-  
-  # if(length(which(predictions$V1>0.5 &  predictions$Observed=="Recombinant"))>0){
-  #   okpl<-training.set$Plots[which(predictions$V1>0.5 &  predictions$Observed=="Recombinant"),]
-  #   
-  #   ggarrange(plotlist = okpl[c(1:min(40, length(okpl)))], ncol = 4, nrow = 10)
-  #   ggsave(paste("/Models/",gsub("-","",Sys.Date()),"_Model_CorrectExamples.pdf",sep = ""), width = 15, height = 30)
-  # }
   
   #Save model
-  if(BA > 0.6){
-    path<-paste("/Models/",gsub("-","",Sys.Date()),"_Recombinant_Model.hdf5",sep = "")
+  
+    path<-paste("/Models/",modelid,"/",gsub("-","",Sys.Date()),"_Recombinant_Model.hdf5",sep = "")
     save_model_hdf5(model,path)
-  }else{
-    print("Warning: No meaningful model generated. ")
-    path<-paste("/Models/",gsub("-","",Sys.Date()),"WARNING.LOW.BA_Recombinant_Model_.hdf5",sep = "")
-    save_model_hdf5(model,path)
-  }
+
   return(model)
   
 }
 
 # ML Inference ------------------------------------------------------------
-ml.inference<-function(inference.set, model){
+ml.inference<-function(inference.set, model, model.id){
   
-  size.file<-list.files("/Models/", pattern = "_InputSize.csv", full.names = TRUE)
+  size.file<-list.files(paste("/Models/", model.id), pattern = "_InputSize.csv", full.names = TRUE)
   size.dataset<-read.csv(size.file)
   
   labels.to.test<- names(inference.set$Probs)
