@@ -1,8 +1,17 @@
 #!/bin/bash
-if [[ "$(docker images -q garcianacho/precfinder 2> /dev/null)" != "" ]] 
+if [ -z "$1" ];
+then
+  echo "No model name selected. Run it as Training.sh YourModelName" 
+else
+
+if [[ "$(docker images -q precfinder 2> /dev/null)" != "" ]] 
 then
   mkdir {1}
-  docker run -it --rm -v $(pwd):/Inference -v $(pwd):/Models -v $(pwd)/Training/:/Training garcianacho/recfinder Rscript /home/docker/Scripts/Training.R {1}
+  docker run -it --rm -v Models:/Models -v Training/Training/:/Training recfinder Rscript /home/docker/Scripts/Training.R {1}
+  echo "Adding your model to the image..."
+  docker build -t precfinder .
 else
-   echo "Not docker image found, build docker image first!"
+   echo "No precfinder found! Run Install.sh to install it."
+fi
+
 fi
