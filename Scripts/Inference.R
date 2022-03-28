@@ -1,13 +1,17 @@
 source("/home/docker/Scripts/Functions.R")
 
+args=commandArgs(TRUE)
+
+if(dir.exists(paste("/Models/", args[1],sep = ""))){
+
 nc.pg.run(mode="Inference")
-mutation.table.file<-list.files("/Models/", pattern = ".*_MutationTable.csv", full.names = TRUE)
+mutation.table.file<-list.files(paste("/Models/", args[1],sep = ""), pattern = ".*_MutationTable.csv", full.names = TRUE)
 mutation.table<- read.csv(mutation.table.file, stringsAsFactors = FALSE)
 
 inference.raw<-read.csv("/Inference/Inference_dataset.csv")
 resultsInference<-P.calculator(input.data = inference.raw, mutation.table = mutation.table)
 
-model.file<-mutation.table.file<-list.files("/Models/", pattern = ".*.hdf5", full.names = TRUE)
+model.file<-mutation.table.file<-list.files(paste("/Models/", args[1],sep = ""), pattern = ".*.hdf5", full.names = TRUE)
 model<-load_model_hdf5(model.file)
 results.out<-ml.inference(inference.set = resultsInference, model = model )
 
@@ -85,4 +89,7 @@ if(length(pdf.list)>1){
   file.remove(pdf.list)
 }
 
+}
+}else{
+  print(paste("No model found. Available models: ", paste(gsub(".*/","",list.dirs("/Models/",recursive = FALSE)), collapse = " / "), sep = ""))
 }
