@@ -15,10 +15,9 @@ Note that Rrecfinder is still on a very early stage, it will be buggy and it cou
 
 <code>Precfinder/Install.sh</code>
 
-3. Copy your multifasta file inside the Precfinder/Inference folder and run the Inference script inside Precfinder's folder 
+3. Copy your multifasta file inside the Precfinder/Inference folder and run the Inference script inside Precfinder's folder *ModelName*
 
-<code>./Inference.sh</code>
-
+<code>./Inference.sh ModelName</code>
 
 ## Output
 
@@ -44,6 +43,12 @@ Precfinder will save five new files inside the Precfinder/Inference folder:
 
 The pdfs contains plots similar to this one: 
 
+## Current models
+We distribute Precfinder with a set of pretrained models:
+*Norway10K*   
+*Norway20K*   
+
+We expect to increase the number of avaible models and to 
 
 ## Advanced Instructions
 
