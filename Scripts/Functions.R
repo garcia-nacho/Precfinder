@@ -47,7 +47,7 @@ nc.pg.run <- function(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.c
       df.pango<-read.csv(paste(f.temp, "_pango.csv", sep = ""))
       
       colnames(df.pango)[1]<-"seqName"
-      df<-merge(df.nc, df.pango, by="seqName",all.x=TRUE)
+      df.temp<-merge(df.nc, df.pango, by="seqName")
       file.remove(paste(f.temp, "_pango.csv", sep = ""))
       file.remove(paste(f.temp, "_nc.csv", sep = ""))
       file.remove(f.temp)
