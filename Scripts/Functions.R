@@ -52,7 +52,7 @@ nc.pg.run <- function(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.c
       file.remove(paste(f.temp, "_nc.csv", sep = ""))
       file.remove(f.temp)
       
-      if(!exists("df")){
+      if(start==1){
         df<-df.temp
       }else{
         df<-rbind(df,df.temp)
