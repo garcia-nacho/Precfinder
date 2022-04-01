@@ -1,9 +1,9 @@
 # Probabilistic Recombinant Finder (Precfinder)
 
 ## Description
-Precfinder is a tool to identify SARS-CoV-2 recombinants.
-Precfinder is distributed as docker image with some wrapping scripts to install it, run it or to train additional models.
-Note that Rrecfinder is still on a very early stage, it will be buggy and it could suffer drastic changes in the future.
+Precfinder is a tool to identify SARS-CoV-2 recombinants.   
+Precfinder is distributed as docker image with some wrapping scripts to install it, run it and train additional models.   
+**Note that Rrecfinder is still on a very early stage, it will be buggy and it could suffer drastic changes in the future.**
 
 ## Instructions
 
@@ -48,7 +48,7 @@ We distribute Precfinder with a set of pretrained models:
 *Norway10K*   
 *Norway20K*   
 
-We expect to increase the number of avaible models and to 
+We expect to increase the number of avaible models and to update them regularly. 
 
 ## Advanced Instructions
 
