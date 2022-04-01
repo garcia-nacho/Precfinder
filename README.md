@@ -36,7 +36,7 @@ It contains the recombinant prediction for each sequence. Including two classes 
 Same as above but it includes pangolin lineage.  
 
 *Inference_dataset.csv*    
-It is a temporary file that contains nextclade output alonside pangolin lineage. Note that the insertions and deletions have been reencoded and included under the column substitutions. (e.g. A deletion of 3 nucleotides on the position 123 *(123-125)* would be reencoded as D123C. An insertion of 6 nucleotides at position 1200 (1200:AAAAAA) will become I1200F under the substitutions column)    
+It is a temporary file that contains nextclade output alonside pangolin lineage. Note that the insertions and deletions have been reencoded and included under the column substitutions. (e.g. A deletion of 3 nucleotides on the position 123 (*123-125*) would be reencoded as *D123C*. An insertion of 6 nucleotides at position 1200 (*1200:AAAAAA*) will become *I1200F* under the substitutions column)    
 
 *Date_RecombinantPlots.pdf*   
 It contains a plot for each of the sequences present on the multifasta file.
