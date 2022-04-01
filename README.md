@@ -33,7 +33,7 @@ Precfinder will save five new files inside the Precfinder/Inference folder:
 
 *Recombinant_PredictionwPango.xlsx* same as above but it includes pangolin lineage.  
 
-*Inference_dataset.csv* is a temporary file that contains nextclade output alonside pangolin lineage. Note that the insertions and deletions have been reencoded (i.e. D123C is a deletion of 3 nucleotides on the position 123, I1200F is the insertion of 6 nucleotides on the position 1200) and included under the column substitutions.   
+*Inference_dataset.csv* is a temporary file that contains nextclade output alonside pangolin lineage. Note that the insertions and deletions have been reencoded and included under the column substitutions. (e.g. A deletion of 3 nucleotides on the position 123 *(123-125)* would be reencoded as D123C. An insertion of 6 nucleotides at position 1200 (1200:AAAAAA) will become I1200F under the substitutions column)    
 
 *Date_RecombinantPlots.pdf* contains a plot for each of the sequences present on the multifasta file.
 
