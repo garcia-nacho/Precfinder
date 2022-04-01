@@ -48,7 +48,7 @@ It contains a plot for each sequence predicted to be a recombinant.
 
 The pdfs contains plots similar to this one: 
 
-![EX](/XERecombinant.png)
+<img src="/XERecombinant.png" width="300">
 
 ## Current models
 We distribute Precfinder with a set of pretrained models:
