@@ -66,12 +66,12 @@ were too small for the XE recombinant to be analysed by region.*
 
 ## Current models   
 We distribute Precfinder with a set of pretrained models:   
-*Norway10K*  (Trained using the last 10K Norwegian sequences deposited in [GISAID](https://www.gisaid.org/))    
-*Norway22K*  (Trained using the last 20K Norwegian sequences deposited in [GISAID](https://www.gisaid.org/))   
-*NorwayMarch2022*  (Trained using all the Norwegian sequences deposited in [GISAID](https://www.gisaid.org/) during March 2022)   
-*Europe7K*  (Trained using the last 7K European sequences deposited in [GISAID](https://www.gisaid.org/))   
-*Europe15K*  (Trained using the last 15K European sequences deposited in [GISAID](https://www.gisaid.org/))   
-*Europe40K*  (Trained using the last 15K European sequences deposited in [GISAID](https://www.gisaid.org/))   
+**Norway10K**  (Trained using the last 10K Norwegian sequences deposited in [GISAID](https://www.gisaid.org/))    
+**Norway22K**  (Trained using the last 20K Norwegian sequences deposited in [GISAID](https://www.gisaid.org/))   
+**NorwayMarch2022**  (Trained using all the Norwegian sequences deposited in [GISAID](https://www.gisaid.org/) during March 2022)   
+**Europe7K**  (Trained using the last 7K European sequences deposited in [GISAID](https://www.gisaid.org/))   
+**Europe15K**  (Trained using the last 15K European sequences deposited in [GISAID](https://www.gisaid.org/))   
+**Europe40K**  (Trained using the last 15K European sequences deposited in [GISAID](https://www.gisaid.org/))   
 
 We expect to increase the number of avaible models and to update them regularly. 
 
