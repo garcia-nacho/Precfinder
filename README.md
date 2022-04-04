@@ -20,17 +20,18 @@ The packed tools to find recombinants and coinfections can be used alone or in c
 
 <code>Precfinder/Install.sh</code>
 
-Recombinant finder:
+**Recombinant finder:**
 
 3.A. Copy your multifasta file inside the Precfinder/Inference folder and run the Inference script inside Precfinder's folder *ModelName*   
 
 <code>./Inference.sh ModelName</code>   
 
-Coinfection finder:   
+**Coinfection finder:**   
 
 3.B. Copy your bam files inside the Precfinder/Coinfections   
-For Illumina:   
+For Illumina:     
 <code>./Coinfections.sh Illumina</code>   
+   
 For Nanopore:   
 <code>./Coinfections.sh Nanopore</code>      
 
