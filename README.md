@@ -6,7 +6,9 @@ Precfinder is distributed as docker image with some wrapping scripts to install 
 **Note that Rrecfinder is still on a very early stage, it will be buggy and it could suffer drastic changes in the future.**
 
 ## Motivation   
-to be written
+During 2022 we have seen a high *covid-19* prevalence and the coexistance of large viral lineages (e.g. Delta and Omicron, Omicron BA.1 and Omicron BA.2); therefore, the probability of two differente viruses infecting the same person are non-neglectable as it was before.    
+In this new context, we decided to create a tool to identify recombinant viruses.   Quickly, we discovered that finding SARS-CoV-2 recombinants is a very challenging task due to the relative low number of mutations between the different lineages, the small viral genome and the relative heterogeneity between samples classified under the same lineage. Moreover, we found that samples from coinfections in which the concentration of two viruses is similar, can have mutations from both lineages on the consensus confounding ever more the hunt for recombinants.   To minimize the number of false positive recombinants, we decided to include a detector of coinfections alongside the recombinant finder.   
+The packed tools to find recombinants and coinfections can be used alone or in combination.  
 
 ## Instructions
 
