@@ -11,7 +11,7 @@ library("entropy")
 library("abind")
 
 # Nextclade & Pangolin running inside docker ---------------------------------
-nc.pg.run <- function(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.co=0.95, mode="Training"){
+nc.pg.run <- function(collapse.lineage="AY,BA.1", clean.bad=TRUE, freq.co=0.01, cov.co=0.95, mode="Training"){
   if(mode!="Training") mode<-"Inference"
   
   fa.train <- list.files(paste("/",mode,"/",sep = ""), full.names = TRUE, pattern = ".*\\.fa.*")
