@@ -117,7 +117,7 @@ Note that Precfinder can't distinguish between in-vivo and ex-vivo contamination
 ## Advanced instructions       
 I tried to write precfinder as modular as possible, so it is possible to create you own ways to use precfinder.   
 Precfinder contains six core functions that can be used to create you own custom scripts, they are stored in the *Functions.R* file.   
-### Core functions   
+### Core functions for recombinant finding       
 
 ***nc.pg.run(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.co=0.95, mode="Training")***  
 *nc.pg.run()* runs nextclade and pangolin for a multifasta file.   
