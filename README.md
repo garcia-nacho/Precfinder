@@ -164,14 +164,10 @@ Next, a 1D convolutional neural network is trained using 90% the training data, 
 A confusion-matrix and a plot ilustrating the training process for each model is stored alongside the .hd5f files. 
 All the models that we provide have a balaced accuracy >90% being the most accurate one the Europe40K with a balanced accuracy of 97.7%.   
 
-### Understanding the limitations of the methods
-The main limitaion of Precfinder is that it does not understand what it has not seen (e.g Using a Norwegian model to classify Spanish samples could result on incorrect conditional probabilities on the Spanish samples and therefore samples). It is important to keep your models updated so that they capture the current status of the pandemic in the context of the samples that you are analyzing.    
+### Understanding the limitations of Precfinder
+The main limitation of Precfinder is that it does not know what it has not seen (e.g. Using a Norwegian model to classify Spanish samples could result on incorrect conditional probabilities on the Spanish samples because of Spanish specific sublineages). It is, therefore, important to keep your models updated so that they capture the current status of the pandemic in the context of the samples that you are analyzing.    
 Trying to identify recombiations between sublineages with a small amount of unique mutations (e.g BA.1.1 vs BA.1) could result on incorrect predictions.   
-Low quality samples (e.g. samples in which big chunks of the genome is missing) could lead to aberrant patterns that can't be understood by the 1-D CNN model.   
-Co-infections/contaminants. Highly mixed samples can be understood by Precfinder as recombinants since they contain a mixture of mutations from the two parental samples. Be sure that you run the contaminant detection script on your samples before concluding that it is a recombinant.
+Low quality samples (e.g. samples in which big chunks of the genome are missing) could lead to aberrant patterns that can't be understood by the 1-D CNN model.   
+Co-infections/contaminants. Highly mixed samples (those in which the DNA of the different viruses have similar yield) can be understood by Precfinder as recombinants since they might contain a mixture of mutations from the two parental samples. Be sure that you run the contaminant detection script on your samples before concluding that it is a recombinant.
 Contaminations. Be aware that Precfinder can't distingue between contaminants and coinfections.  
-New recombinant lineages. We expect that some of the recombinants will be included as new independent lineages (e.g. XE lineage). This might confound the first models after the inclusion of those recombinant lineages in the training set. However, after certain time and the adquisition of new XE specific mutations, Precfinder will be able to find recombinants again (including recombinants between the recombinant lineages).     
-
-
-## Going further
-To be written   
+New recombinant lineages. We expect that the recombinants will be included as new independent lineages (e.g. "XE" lineage is classified as "None" by 4th of April 2022). This might confound the first models after the inclusion of those recombinant lineages in the training set. However, after certain time and the adquisition of new XE specific mutations, Precfinder will be able to find recombinants again (including recombinants between the recombinant lineages).     
