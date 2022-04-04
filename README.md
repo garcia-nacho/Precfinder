@@ -1,9 +1,12 @@
 # Probabilistic Recombinant Finder (Precfinder)
 
 ## Description
-Precfinder is a tool to identify SARS-CoV-2 recombinants.   
+Precfinder is a tool to identify SARS-CoV-2 recombinants and/or coinfections.   
 Precfinder is distributed as docker image with some wrapping scripts to install it, run it and train additional models.   
 **Note that Rrecfinder is still on a very early stage, it will be buggy and it could suffer drastic changes in the future.**
+
+## Motivation   
+to be written
 
 ## Instructions
 
@@ -15,11 +18,22 @@ Precfinder is distributed as docker image with some wrapping scripts to install 
 
 <code>Precfinder/Install.sh</code>
 
-3. Copy your multifasta file inside the Precfinder/Inference folder and run the Inference script inside Precfinder's folder *ModelName*
+Recombinant finder:
 
-<code>./Inference.sh ModelName</code>
+3.A. Copy your multifasta file inside the Precfinder/Inference folder and run the Inference script inside Precfinder's folder *ModelName*   
 
-## Output
+<code>./Inference.sh ModelName</code>   
+
+Coinfection finder:   
+
+3.B. Copy your bam files inside the Precfinder/Coinfections   
+For Illumina:   
+<code>./Coinfections.sh Illumina</code>   
+For Nanopore:   
+<code>./Coinfections.sh Nanopore</code>      
+
+   
+## Output recombinant finder
 
 Precfinder will save five new files inside the Precfinder/Inference folder:   
 
@@ -44,7 +58,7 @@ It contains a plot for each of the sequences present on the multifasta file.
 *Date_RecombinantSelected.pdf*   
 It contains a plot for each sequence predicted to be a recombinant.  
 
-## Interpreting the plots
+## Interpreting the recombinant plots
 
 The pdfs contains plots similar to this one: 
 
@@ -64,7 +78,7 @@ cannot yet be interpreted as an estimate of growth advantage for the recombinant
 were too small for the XE recombinant to be analysed by region.*   
 [SARS-CoV-2 variants of concern and variants under investigation in England (#39/25.03.2022)](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1063424/Tech-Briefing-39-25March2022_FINAL.pdf)
 
-## Current models   
+## Current models for recombinant identification   
 We distribute Precfinder with a set of pretrained models:   
 **Norway10K**  (Trained using the last 10K Norwegian sequences deposited in [GISAID](https://www.gisaid.org/))    
 **Norway22K**  (Trained using the last 20K Norwegian sequences deposited in [GISAID](https://www.gisaid.org/))   
@@ -79,11 +93,22 @@ We expect to increase the number of avaible models and to update them regularly.
 To update precfinder you just need to run
 <code>./Update.sh</code>   
 
-## Training your own models
+## Training your own recombinant models
 Precfinder offers the possibility of training your own custom models.   
 To train your own model, you need to save a multifasta file on the training folder and run 
 <code>./Training.sh MyOwnModel</code>   
 A new model named *MyOwnModel* will be trained, saved on the Models folder and transferred to the precfinder docker image.     
+
+
+## Output coinfection finder   
+Precfinder will save a pdf plot containing the calculated noise across the SARS-CoV-2 genome. Samples in which two (or more) distinct viruses are present will have noise on the positions where the two viruses are different:
+Example of a regular sample:   
+
+Example of a coinfection:   
+
+Note that Precfinder can't distinguish between in-vivo and ex-vivo contaminations.
+
+
 
 ## Advanced instructions   
 I tried to write precfinder as modular as possible, so it is possible to create you own ways to use precfinder.   
