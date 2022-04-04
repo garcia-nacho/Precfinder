@@ -150,12 +150,28 @@ It trains and saves the classification models. The function will also save a con
 It predicts the presence of recombinants using the *model* named *model.id*   
 
 ### Contaminant finder:   
-Finding of contaminants relies on a tool called FINex that scans the entire genome looking for noise. It generates two fasta sequences, one for the virus with higher number of reads (major) and one for the virus with smaller number of reads (minor) and it runs pangolin classification on both.   Stay tuned for FINex's own github repo.    
+The identification of contaminants relies on a tool called *FINex* that scans the entire genome looking for noise. It generates two fasta sequences, one for the virus with higher number of reads (major) and one for the virus with smaller number of reads (minor) and it runs pangolin classification on both.   Stay tuned for FINex's own github repo.    
 
 
 ## Under the hood.
-To be written...      
-## Understanding the limitations of the methods
-To be written...    
+
+### Conditional probability calculation    
+The conditional probability for every mutation *P(Lineage|Mutation)* is calculated using Bayes' rule over the training set, and the most likely lineage for each mutation is assigned alongside the conditional probability. The mutations are stored in the *MutationTable.csv* where the colums represent the mutation, the total count, the total count for each lineage, the frequency of that mutation on the different lineages, the most likely lineage and the conditional probability.
+
+### Sample classification
+To classify the different samples as recombinant or non-reconbinant, the training process generates a set of artificial recombinants containg one or two breakpoints from two distinct lineges. The training set containing the artificial and real sequences is then parsed into a 3D array in which the first dimension is the sample dimension, the second dimension is where the different mutations are stored and the third dimensions works a a channel dimension that contains the conditional probability for the different lineages. An extra step of 3X agumentation is preformed to increase the number of samples by shuffling the channel dimension.   
+Next, a 1D convolutional neural network is trained using 90% the training data, the remaining 10% is used to valiate the model and stop the training before overfitting.   
+A confusion-matrix and a plot ilustrating the training process for each model is stored alongside the .hd5f files. 
+All the models that we provide have a balaced accuracy >90% being the most accurate one the Europe40K with a balanced accuracy of 97.7%.   
+
+### Understanding the limitations of the methods
+The main limitaion of Precfinder is that it does not understand what it has not seen (e.g Using a Norwegian model to classify Spanish samples could result on incorrect conditional probabilities on the Spanish samples and therefore samples). It is important to keep your models updated so that they capture the current status of the pandemic in the context of the samples that you are analyzing.    
+Trying to identify recombiations between sublineages with a small amount of unique mutations (e.g BA.1.1 vs BA.1) could result on incorrect predictions.   
+Low quality samples (e.g. samples in which big chunks of the genome is missing) could lead to aberrant patterns that can't be understood by the 1-D CNN model.   
+Co-infections/contaminants. Highly mixed samples can be understood by Precfinder as recombinants since they contain a mixture of mutations from the two parental samples. Be sure that you run the contaminant detection script on your samples before concluding that it is a recombinant.
+Contaminations. Be aware that Precfinder can't distingue between contaminants and coinfections.  
+New recombinant lineages. We expect that some of the recombinants will be included as new independent lineages (e.g. XE lineage). This might confound the first models after the inclusion of those recombinant lineages in the training set. However, after certain time and the adquisition of new XE specific mutations, Precfinder will be able to find recombinants again (including recombinants between the recombinant lineages).     
+
+
 ## Going further
 To be written   
