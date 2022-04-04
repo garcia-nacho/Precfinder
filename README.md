@@ -114,7 +114,7 @@ Note that Precfinder can't distinguish between in-vivo and ex-vivo contamination
 
 
 
-## Advanced instructions   
+## Advanced instructions       
 I tried to write precfinder as modular as possible, so it is possible to create you own ways to use precfinder.   
 Precfinder contains six core functions that can be used to create you own custom scripts, they are stored in the *Functions.R* file.   
 ### Core functions   
@@ -149,10 +149,13 @@ It trains and saves the classification models. The function will also save a con
 ***ml.inference(inference.set, model, model.id)***   
 It predicts the presence of recombinants using the *model* named *model.id*   
 
+### Contaminant finder:   
+Finding of contaminants relies on a tool called FINex that scans the entire genome looking for noise. It generates two fasta sequences, one for the virus with higher number of reads (major) and one for the virus with smaller number of reads (minor) and it runs pangolin classification on both.   Stay tuned for FINex's own github repo.    
+
 
 ## Under the hood.
 To be written...      
-## Understanding the limitations of the method
+## Understanding the limitations of the methods
 To be written...    
 ## Going further
 To be written   
