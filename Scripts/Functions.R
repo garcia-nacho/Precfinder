@@ -64,7 +64,7 @@ nc.pg.run <- function(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.c
     }
   }
   #Remove none and NA from pangolin, Only for Training
-  if(clean.bad & mode=="Training"){
+  if(mode=="Training"){
   if(length(which(df$lineage=="None"))>0) df<-df[-which(df$lineage=="None"),]
   if(length(which(is.na(df$lineage)))>0) df<-df[-which(is.na(df$lineage)),]
   }
@@ -231,7 +231,7 @@ P.calculator <- function(input.data, mutation.table){
 
   try(rm(out.list))
   try(rm(plot.list))
-  pb<-txtProgressBar(min = 1, max = nrow(df), initial = 1)
+  pb<-txtProgressBar(min = 0, max = nrow(df), initial = 0)
   for (i in 1:nrow(df)) {
     setTxtProgressBar(pb,i)
     
