@@ -1,5 +1,10 @@
 # Probabilistic Recombinant Finder (Precfinder)
 
+**IF YOU HAVE INSTALLED PRECFINDER AFTER 04/04/2022 YOU MUST INSTALL IT AGAIN TO GET PAGOLIN LINEAGES PROPERLY**   
+   
+      
+         
+
 ## Description
 Precfinder is a tool to identify SARS-CoV-2 recombinants and/or coinfections.   
 Precfinder is distributed as docker image with some wrapping scripts to install it, run it and train additional models.   
