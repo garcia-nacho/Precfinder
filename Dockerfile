@@ -1,4 +1,4 @@
-FROM garcianacho/fhibaseillumina:04042022
+FROM garcianacho/fhibaseillumina:06042022
 LABEL maintainer="Nacho Garcia <iggl@fhi.no>"
 
 RUN Rscript -e "install.packages(c('keras', 'entropy', 'abind'))"
