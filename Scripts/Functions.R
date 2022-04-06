@@ -70,7 +70,7 @@ nc.pg.run <- function(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.c
   }
   
   #Collapse lineages
-  if(collapse.lineage!=FALSE){
+  if(collapse.lineage!=FALSE & mode=="Training"){
     collapse.lineage<-gsub(" ","",collapse.lineage)
     collapse.lineage<-unlist(base::strsplit(collapse.lineage,","))
     collapse.lineage<-paste(collapse.lineage, ".",sep = "")
@@ -88,7 +88,7 @@ nc.pg.run <- function(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.c
   }
   
   cov.co <- 29903 - (29903*cov.co)
-  if(length(which(df$totalMissing>cov.co))>0)df<-df[-which(df$totalMissing>cov.co),]
+  if(length(which(df$totalMissing>cov.co))>0 & mode=="Training")df<-df[-which(df$totalMissing>cov.co),]
  
   #Recode insertions and deletions
   for (d in 1:nrow(df)) {
