@@ -93,6 +93,7 @@ nc.pg.run <- function(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.c
   #Recode insertions and deletions
   for (d in 1:nrow(df)) {
     #Deletions
+    if(length(which(is.na(df$deletions)) )>0) df$deletions[which(is.na(df$deletions)) ]<-""
     if(df$deletions[d]!=""){
       dummy.del<- unlist(base::strsplit(df$deletions[d], ",") )
       dummyvec<-vector()
@@ -114,6 +115,8 @@ nc.pg.run <- function(collapse.lineage="AY", clean.bad=TRUE, freq.co=0.01, cov.c
     }
     
     #Insertions
+   if(length(which(is.na(df$insertions)) )>0) df$insertions[which(is.na(df$insertions)) ]<-""
+
     if(df$insertions[d]!=""){
       dummy.ins<- unlist(base::strsplit(df$insertions[d], ",") )
       dummyvec<-vector()
