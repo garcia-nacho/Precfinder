@@ -336,7 +336,7 @@ P.calculator <- function(input.data, mutation.table){
 }
 
 # Dataset preparation -------------------------------------------------------------
-trainset.prep <- function(data, sample.mult=5, max.number=80000){
+trainset.prep <- function(data, sample.mult=5, max.number=200000){
   pb<-txtProgressBar(min=1, max = (nrow(data)*sample.mult*2), initial = 1)
 continue<-TRUE
 counter<-0
