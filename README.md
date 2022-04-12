@@ -1,6 +1,6 @@
 # Probabilistic Recombinant Finder (Precfinder)
 
-:warning:  **IF YOU INSTALLED PRECFINDER BETWEEN 04/04/2022 AND 05/04/2022 YOU MUST INSTALL IT AGAIN**
+:warning:  **IF YOU INSTALLED PRECFINDER BETWEEN 04/04/2022 AND 05/04/2022, YOU MUST INSTALL IT AGAIN**
          
 
 ## Description
@@ -109,12 +109,13 @@ A new model named *MyOwnModel* will be trained, saved on the Models folder and t
 
 ## Output coinfection finder   
 Precfinder will save a pdf plot containing the calculated noise across the SARS-CoV-2 genome. Samples in which two (or more) distinct viruses are present will have noise on the positions where the two viruses are different:
+
 Example of a regular sample:   
 
 Example of a coinfection:   
 
-Note that Precfinder can't distinguish between in-vivo and ex-vivo contaminations.
-
+Note that Precfinder can't distinguish between in-vivo and ex-vivo contaminations and that the coinfection finder is still experimental for Nanopore samples.
+Precfinder will save a results file showing the presence or absense of coinfections.
 
 
 ## Advanced instructions       
