@@ -21,7 +21,7 @@ The packed tools to find recombinants and coinfections can be used alone or in c
 
 2. Install it  
 
-<code>Precfinder/Install.sh</code>
+<code>cd Precfinder && ./Install.sh</code>
 
 **Recombinant finder:**
 
