@@ -170,7 +170,7 @@ All the models that we provide have a balaced accuracy >90% being the most accur
 <img src="/CM_TestSet.png" width="500">    
 
 ### Understanding the limitations of Precfinder
-The main limitation of Precfinder is that it does not know what it has not seen (e.g. Using a Norwegian model to classify Spanish samples could result on incorrect conditional probabilities on the Spanish samples because of Spanish specific sublineages). It is, therefore, important to keep your models updated so that they capture the current status of the pandemic in the context of the samples that you are analyzing.    
+The main limitation of Precfinder is that it does not know what it has not seen (e.g. Using a Norwegian model to classify Spanish samples could result on incorrect conditional probabilities of the mutations present on the Spanish samples because of Spanish specific sublineages). It is, therefore, important to keep your models updated so that they capture the current status of the pandemic in the context of the samples that you are analyzing.    
 Trying to identify recombiations between sublineages with a small amount of unique mutations (e.g BA.1.1 vs BA.1) could result on incorrect predictions.   
 Low quality samples (e.g. samples in which big chunks of the genome are missing) could lead to aberrant patterns that can't be understood by the 1-D CNN model.   
 Co-infections/contaminants. Highly mixed samples (those in which the DNA of the different viruses have similar yield) can be understood by Precfinder as recombinants since they might contain a mixture of mutations from the two parental samples. Be sure that you run the contaminant detection script on your samples before concluding that it is a recombinant.
