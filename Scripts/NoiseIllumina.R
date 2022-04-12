@@ -40,7 +40,7 @@ if(length(bamfiles)>0){
   
   out.par<-foreach(i=1:length(bamfiles), .verbose=FALSE, .options.snow = opts) %dopar%{
     
-    try(system(paste("FINex -f ",bamfiles[i], " > ",
+    try(system(paste("cd /Noise && FINex -f ",bamfiles[i], " > ",
                      gsub(".*/",temp,gsub("\\.bam", "_NoisExtractorResult.tsv",bamfiles[i])), sep = "")))
     
   }
@@ -114,7 +114,7 @@ if(length(bamfiles)>0){
   if(length(list.files("/Noise/fasta/"))>0){
     system("cat /Noise/fasta/*.fa > /Noise/fasta/Coinfections_total.fa")
     system(paste("pangorunner.sh", "/Noise/fasta/Coinfections_total.fa"))
-    df<- read.csv("/Noise/fasta/Coinfections_total_pango.csv")
+    df<- read.csv("/Noise/fasta/Coinfections_total.fa_pango.csv")
     
     df$Sample<-"S1"
     df$Sample[grep("_S2",df$taxon)]<-"S2"
