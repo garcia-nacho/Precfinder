@@ -41,7 +41,7 @@ if(length(bamfiles)>0){
   
   out.par<-foreach(i=1:length(bamfiles), .verbose=FALSE, .options.snow = opts) %dopar%{
     
-    try(system(paste("FINex -f ",bamfiles[i], " > ",
+    try(system(paste("cd /Noise && FINex -f ",bamfiles[i], " > ",
                      gsub(".*/",temp,gsub("\\.bam", "_NoisExtractorResult.tsv",bamfiles[i])), sep = "")))
     
   }
@@ -61,13 +61,15 @@ if(length(bamfiles)>0){
 
   
   out.plots<-list()
+  co<-0.1
+  date<-gsub("-","",Sys.Date())
   for(i in 1:length(results.files)){
 
     df<-read.csv(results.files[i],sep = "\t",header = FALSE)
     
-    df<-df[,c(1,2,3,6,7)]
+    df<-df[,c(1,2,3,4,5,6,7)]
     
-    colnames(df)<-c("Base","Noise","Reads","FreqMinor","NoiseMinor")
+    colnames(df)<-c("Base","Noise","Reads","S1","S2","FreqMinor","NoiseMinor")
     df$NonMR<-df$Reads*df$Noise
     df$MR<-df$Reads-df$NonMR
     
@@ -91,39 +93,40 @@ if(length(bamfiles)>0){
     df$NoiseNP<-0
     df$NoiseNP[which(df$Outlier=="YES")]<-df$FreqMinor[which(df$Outlier=="YES")]
     
-    # ML test extraction --
-    ml.noise.mean<-mean(df$Noise, na.rm=TRUE)
-    ml.noise.sd<-sd(df$Noise, na.rm=TRUE)
-    ml.minor.mean<-mean(df$FreqMinor, na.rm=TRUE)
-    ml.minor.sd<-sd(df$FreqMinor, na.rm=TRUE)
-    ml.noise.q3<-as.numeric(quantile(df$FreqMinor, na.rm=TRUE)[4])
-    ml.minor.q3<-as.numeric(quantile(df$Noise, na.rm=TRUE)[4])
-    ml.count.missing<- length(which(df$Reads<20))/29903
-    ml.minor.count<- length(which(df$Outlier=="YES"))/29903
-    ml.co <- as.numeric(co)
+    #Extraction
+    if(length(which(df$Outlier=="YES"))>10 ){
+      dummy<-df
+      if(!dir.exists(paste(results,"fasta/",sep = ""))) try(dir.create(paste(results,"fasta/",sep = "")))
+      
+      genome.position<-as.data.frame(c(1:29903))
+      colnames(genome.position)<-"Base"
+      dummy<-merge(dummy,genome.position,by="Base",all.y=TRUE)
+      dummy$S1[which(is.na(dummy$S1))]<-"N"
+      dummy$S2[which(is.na(dummy$S2))]<-"N"
+      dummy$S2[which(dummy$Reads<20)]<-"N"
+      dummy$S1[which(dummy$Reads<20)]<-"N"
+      
+      dummy$S2[which(df$Outlier!="YES")]<-dummy$S1[which(df$Outlier!="YES")]
+      
+      if(length(which(dummy$S1!=dummy$S2))>5 & length(which(dummy$S1=="N"))<1000){
+        
+        write.fasta(paste(dummy$S1[which(dummy$S1 %in% c("A","T","C","G","N"))], collapse = ""),
+                    file.out = gsub("_NoisExtractorResult.tsv","_S1.fa", gsub(".*/",paste(results,"fasta/",sep = ""),results.files[i])), 
+                    names = gsub("_NoisExtractorResult.tsv","_S1.fa", gsub(".*/","",results.files[i])))
+        
+        write.fasta(paste(dummy$S2[which(dummy$S2 %in% c("A","T","C","G","N"))], collapse = ""),
+                    file.out = gsub("_NoisExtractorResult.tsv","_S2.fa", gsub(".*/",paste(results,"fasta/",sep = ""),results.files[i])), 
+                    names = gsub("_NoisExtractorResult.tsv","_S2.fa", gsub(".*/","",results.files[i])))   
+      }
+      
+    }
     
-    to.ml<-as.data.frame(t(c(ml.noise.mean, 
-                             ml.noise.sd,
-                             ml.minor.mean,
-                             ml.minor.sd,
-                             ml.noise.q3,
-                             ml.minor.q3,
-                             ml.count.missing,
-                             ml.minor.count,
-                             ml.co)))
-    # ML extraction end --
+
     
     
     names<-gsub("\\.sorted.*","",gsub("_S[0-9].*","",gsub("R[0-9].*","",gsub(".*/","",results.files[i]))))
-    to.ml$Sample<-names
-    if(!exists("ml.out")){
-      ml.out<-to.ml
-    }else{
-      ml.out<-rbind(ml.out, to.ml)
-    }
-    
-   
-    #names<-gsub("\\.primertrimmed.*","",gsub("_S[0-9].*","",gsub(".*/","",results.files[i])))
+
+
     out.plots[[i]]<-ggplot(df)+
       geom_line(aes(Base, NoiseNP))+
       geom_point(data=subset(df, Outlier=="YES"),aes(Base, NoiseNP),col="red", alpha=0.3)+
@@ -135,6 +138,34 @@ if(length(bamfiles)>0){
 
   }
   
+  if(length(list.files("/Noise/fasta/"))>0){
+    system("cat /Noise/fasta/*.fa > /Noise/fasta/Coinfections_total.fa")
+    system(paste("pangorunner.sh", "/Noise/fasta/Coinfections_total.fa"))
+    df<- read.csv("/Noise/fasta/Coinfections_total.fa_pango.csv")
+    
+    df$Sample<-"S1"
+    df$Sample[grep("_S2",df$taxon)]<-"S2"
+    df$ID<-gsub( "_S.\\.fa","",df$taxon)
+    
+    
+    S1.df<-df[which(df$Sample=="S1"),c("lineage","conflict","note","ID")]
+    S2.df<-df[which(df$Sample=="S2"),c("lineage","conflict","note","ID")]
+    
+    colnames(S1.df)[-4]<-paste("S1_",colnames(S1.df)[-4], sep = "")
+    colnames(S2.df)[-4]<-paste("S2_",colnames(S2.df)[-4], sep = "")
+    
+    total<-merge(S1.df, S2.df, by="ID")
+    total<-total[,c("ID", "S1_lineage", "S2_lineage")]
+    colnames(total)<-c("Sample", "Major", "Minor")
+    
+    if(length(which(total$Major==total$Minor))>0){
+      total<-total[-which(total$Major==total$Minor),]
+    }
+    
+    if(nrow(total)>0) write.csv(total, paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE)
+    if(nrow(total)==0) write.table("No Coinfections Found!",paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE, quote = FALSE, col.names = FALSE)
+    try(system("rm -rf /Noise/fasta"))
+  }
 
   
   
@@ -166,6 +197,7 @@ date<-gsub("-","",Sys.Date())
 
  pdf.list<-list.files(results, full.names = TRUE, pattern = ".*NoisExtractor.*\\.pdf")
  library("pdftools")
+ try(system("rm -rf /Noise/rawnoise"))
  if(length(pdf.list)>1){
  pdf_combine(pdf.list, output = gsub("_.\\.pdf","_Merged.pdf",pdf.list[1]))
  file.remove(pdf.list)}

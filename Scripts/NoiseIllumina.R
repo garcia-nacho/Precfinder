@@ -130,8 +130,13 @@ if(length(bamfiles)>0){
     total<-merge(S1.df, S2.df, by="ID")
     total<-total[,c("ID", "S1_lineage", "S2_lineage")]
     colnames(total)<-c("Sample", "Major", "Minor")
-    write.csv(total, paste("/Noise/Coinfection_Lineages", date,".csv",sep=""), row.names = FALSE)
     
+    if(length(which(total$Major==total$Minor))>0){
+      total<-total[-which(total$Major==total$Minor),]
+    }
+    
+    if(nrow(total)>0) write.csv(total, paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE)
+    if(nrow(total)==0) write.table("No Coinfections Found!",paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE, quote = FALSE, col.names = FALSE)
     try(system("rm -rf /Noise/fasta"))
   }
 
