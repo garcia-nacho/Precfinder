@@ -111,9 +111,9 @@ A new model named *MyOwnModel* will be trained, saved on the Models folder and t
 Precfinder will save a pdf plot containing the calculated noise across the SARS-CoV-2 genome. Samples in which two (or more) distinct viruses are present will have noise on the positions where the two viruses are different:
 
 Example of a regular sample:   
-
+<img src="/NoNoise.png" width="300">     
 Example of a coinfection:   
-
+<img src="/Contamination.png" width="300">     
 Note that Precfinder can't distinguish between in-vivo and ex-vivo contaminations and that the coinfection finder is still experimental for Nanopore samples.
 Precfinder will save a results file showing the presence or absense of coinfections.
 
