@@ -167,7 +167,7 @@ To classify the different samples as recombinant or non-reconbinant, the trainin
 Next, a 1D convolutional neural network is trained using 90% the training data, the remaining 10% is used to valiate the model and stop the training before overfitting.   
 A confusion-matrix and a plot ilustrating the training process for each model is stored alongside the .hd5f files. 
 All the models that we provide have a balaced accuracy >90% being the most accurate one the Europe40K with a balanced accuracy of 97.7%.  
-<img src="/CM_TestSet.png" width="300">    
+<img src="/CM_TestSet.png" width="500">    
 
 ### Understanding the limitations of Precfinder
 The main limitation of Precfinder is that it does not know what it has not seen (e.g. Using a Norwegian model to classify Spanish samples could result on incorrect conditional probabilities on the Spanish samples because of Spanish specific sublineages). It is, therefore, important to keep your models updated so that they capture the current status of the pandemic in the context of the samples that you are analyzing.    
