@@ -166,7 +166,8 @@ The conditional probability for every mutation *P(Lineage|Mutation)* is calculat
 To classify the different samples as recombinant or non-reconbinant, the training process generates a set of artificial recombinants containg one or two breakpoints from two distinct lineges. The training set containing the artificial and real sequences is then parsed into a 3D array in which the first dimension is the sample dimension, the second dimension is where the different mutations are stored and the third dimensions works a a channel dimension that contains the conditional probability for the different lineages. An extra step of 3X agumentation is preformed to increase the number of samples by shuffling the channel dimension.   
 Next, a 1D convolutional neural network is trained using 90% the training data, the remaining 10% is used to valiate the model and stop the training before overfitting.   
 A confusion-matrix and a plot ilustrating the training process for each model is stored alongside the .hd5f files. 
-All the models that we provide have a balaced accuracy >90% being the most accurate one the Europe40K with a balanced accuracy of 97.7%.   
+All the models that we provide have a balaced accuracy >90% being the most accurate one the Europe40K with a balanced accuracy of 97.7%.  
+<img src="/CM_TestSet.png" width="300">    
 
 ### Understanding the limitations of Precfinder
 The main limitation of Precfinder is that it does not know what it has not seen (e.g. Using a Norwegian model to classify Spanish samples could result on incorrect conditional probabilities on the Spanish samples because of Spanish specific sublineages). It is, therefore, important to keep your models updated so that they capture the current status of the pandemic in the context of the samples that you are analyzing.    
