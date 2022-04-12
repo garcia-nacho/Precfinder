@@ -69,7 +69,7 @@ It contains a plot for each sequence predicted to be a recombinant.
 
 The pdfs contains plots similar to this one: 
 
-<img src="/XERecombinant.png" width="300">   
+<img src="/XERecombinant.png" width="500">   
 The position on the genome is represented on the X axis and the conditional probability *P(Lineage|Mutation)* is represented on the Y axis (i.e. probability the virus belongs to a certain lineage given a certain mutation). Each point represents a mutation and the colours represent the most likely lineage.   
 As you can see, there are mutations which are *"very exclusive"* (i.e. those with very high conditional probability), while others are more *"promiscuous"* (i.e. those with low predictive power / conditional probability). Based on the mutations plot, we can infer that the first part of the genome belongs to a *B.1* (or *B.1.1* more precisely), while the second part of the genome (after position 12K belongs to a *B.2* lineage).  
 The E=0.369 is the entropy ([as in information theory entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory))) of the mutations with a conditional probability larger than 0.8. As a rule of thumb, the larger the more likely to be a recombinant.   
@@ -111,10 +111,10 @@ A new model named *MyOwnModel* will be trained, saved on the Models folder and t
 Precfinder will save a pdf plot containing the calculated noise across the SARS-CoV-2 genome. Samples in which two (or more) distinct viruses are present will have noise on the positions where the two viruses are different:
 
 Example of a regular sample:   
-<img src="/NoNoise.png" width="300">     
+<img src="/NoNoise.png" width="500">     
 Example of a coinfection:   
-<img src="/Contamination.png" width="300">     
-Note that Precfinder can't distinguish between in-vivo and ex-vivo contaminations and that the coinfection finder is still experimental for Nanopore samples.
+<img src="/Contamination.png" width="500">     
+Note that Precfinder can't distinguish between in-vivo and ex-vivo contaminations and that the coinfection finder is still experimental for Nanopore samples.   
 Precfinder will save a results file showing the presence or absense of coinfections.
 
 
