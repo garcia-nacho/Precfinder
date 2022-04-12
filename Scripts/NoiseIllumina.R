@@ -34,7 +34,7 @@ if(length(bamfiles)>0){
   
   opts <- list(progress = progress)
   
-  dir.create(temp)
+  if(!dir.exists(temp)) dir.create(temp)
   cluster.cores<-makeCluster(cores)
   registerDoSNOW(cluster.cores)
   
@@ -48,7 +48,7 @@ if(length(bamfiles)>0){
   
   results.files<-list.files(temp, pattern = "_NoisExtractorResult\\.tsv$", full.names = TRUE)
 
-  out.plots<-list()
+
  
   co<-0.1
   pb<-txtProgressBar(min = 0, max = length(results.files),initial = 0) #01072021 Nacho Garcia
@@ -58,7 +58,7 @@ if(length(bamfiles)>0){
     
     try(rm(dummy), silent = TRUE)
     try(dummy<-read.csv(results.files[i],sep = "\t", header = FALSE), silent = TRUE)
-    summary$Sample[i]<-gsub(".*/","",results.files[i])
+   
     if(exists("dummy")){
       dummy<-dummy[,c(1:5)]
       colnames(dummy)<-c("Base","Noise","Reads","S1","S2")
@@ -73,7 +73,7 @@ if(length(bamfiles)>0){
       
       dummy$Outlier<-"NO"
       dummy$Outlier[dummy$Noise>=outlier.co]<-"YES"
-      
+      Overall.Noise<-sum(dummy$Noise[dummy$Outlier=="YES"])
       if(length(which(dummy$Noise>co))>5){
         
         if(!dir.exists(paste(results,"fasta/",sep = ""))) try(dir.create(paste(results,"fasta/",sep = "")))
@@ -90,18 +90,16 @@ if(length(bamfiles)>0){
         if(length(which(dummy$S1!=dummy$S2))>5 & length(which(dummy$S1=="N"))<1000){
           
           write.fasta(paste(dummy$S1[which(dummy$S1 %in% c("A","T","C","G","N"))], collapse = ""),
-                      file.out = gsub("_NoisExtractorResult.tsv","_S1.fa", gsub(".*/",paste(results,"fasta/",sep = ""),files[i])), 
-                      names = gsub("_NoisExtractorResult.tsv","_S1.fa", gsub(".*/","",files[i])))
+                      file.out = gsub("_NoisExtractorResult.tsv","_S1.fa", gsub(".*/",paste(results,"fasta/",sep = ""),results.files[i])), 
+                      names = gsub("_NoisExtractorResult.tsv","_S1.fa", gsub(".*/","",results.files[i])))
           
           write.fasta(paste(dummy$S2[which(dummy$S2 %in% c("A","T","C","G","N"))], collapse = ""),
-                      file.out = gsub("_NoisExtractorResult.tsv","_S2.fa", gsub(".*/",paste(results,"fasta/",sep = ""),files[i])), 
-                      names = gsub("_NoisExtractorResult.tsv","_S2.fa", gsub(".*/","",files[i])))   
+                      file.out = gsub("_NoisExtractorResult.tsv","_S2.fa", gsub(".*/",paste(results,"fasta/",sep = ""),results.files[i])), 
+                      names = gsub("_NoisExtractorResult.tsv","_S2.fa", gsub(".*/","",results.files[i])))   
         }
         
       }
       
-      
-     
       names<-gsub("\\.sorted.*","",gsub("_S[0-9].*","",gsub("R[0-9].*","",gsub(".*/","",results.files[i]))))
       out.plots[[length(out.plots)+1]]<-ggplot(dummy)+
         geom_line(aes(Base, Noise))+
@@ -116,29 +114,26 @@ if(length(bamfiles)>0){
   if(length(list.files("/Noise/fasta/"))>0){
     system("cat /Noise/fasta/*.fa > /Noise/fasta/Coinfections_total.fa")
     system(paste("pangorunner.sh", "/Noise/fasta/Coinfections_total.fa"))
-    coinf.pango<- read.csv("/Noise/fasta/Coinfections_total_pango.csv")
+    df<- read.csv("/Noise/fasta/Coinfections_total_pango.csv")
     
     df$Sample<-"S1"
     df$Sample[grep("_S2",df$taxon)]<-"S2"
     df$ID<-gsub( "_S.\\.fa","",df$taxon)
     
     
-    S1.df<-df[which(df$Sample=="S1"),c("lineage","conflict","note","status","ID")]
-    S2.df<-df[which(df$Sample=="S2"),c("lineage","conflict","note","status","ID")]
+    S1.df<-df[which(df$Sample=="S1"),c("lineage","conflict","note","ID")]
+    S2.df<-df[which(df$Sample=="S2"),c("lineage","conflict","note","ID")]
     
-    colnames(S1.df)[-5]<-paste("S1_",colnames(S1.df)[-5], sep = "")
-    colnames(S2.df)[-5]<-paste("S2_",colnames(S2.df)[-5], sep = "")
+    colnames(S1.df)[-4]<-paste("S1_",colnames(S1.df)[-4], sep = "")
+    colnames(S2.df)[-4]<-paste("S2_",colnames(S2.df)[-4], sep = "")
     
     total<-merge(S1.df, S2.df, by="ID")
     total<-total[,c("ID", "S1_lineage", "S2_lineage")]
     colnames(total)<-c("Sample", "Major", "Minor")
     write.csv(total, paste("/Noise/Coinfection_Lineages", date,".csv",sep=""), row.names = FALSE)
     
-    
+    try(system("rm -rf /Noise/fasta"))
   }
-
-  
-
 
   
   if(length(out.plots)<=40 ){
@@ -166,7 +161,7 @@ if(length(bamfiles)>0){
   }
  
  library("pdftools")
-
+  try(system("rm -rf /Noise/rawnoise"))
  pdf.list<-list.files(results, full.names = TRUE, pattern = ".*NoisExtractor.*\\.pdf")
  if(length(pdf.list)>1){
  pdf_combine(pdf.list, output = gsub("_.\\.pdf","_Merged.pdf",pdf.list[1]))

@@ -31,7 +31,7 @@ The packed tools to find recombinants and coinfections can be used alone or in c
 
 **Coinfection finder:**   
 
-3.B. Copy your bam files inside the Precfinder/Coinfections folder. The coinfection finder currently supports two technologies, Illumina and Nanopore, include the flag Illumina or Nanopore accordingly by running:   
+3.B. Copy your bam and bai files inside the Precfinder/Coinfections folder. The coinfection finder currently supports two technologies, Illumina and Nanopore, include the flag Illumina or Nanopore accordingly by running:   
 
 <code>./Coinfections.sh Illumina</code>   
 
