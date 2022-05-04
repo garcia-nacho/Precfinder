@@ -212,11 +212,18 @@ table.generator<-function(df="/Training/Training_dataset.csv", cores=10){
   
   mutation.table$Lineage<-NA
   mutation.table$Lineage.P<-NA
+  mutation.table$Uniqueness<-NA
   
   for (i in 1:nrow(mutation.table)) {
     mutation.table$Lineage[i]<- colnames(add.lineages)[which(add.lineages[i,]==max(add.lineages[i,]))][1]
     if(mutation.table$Lineage[i]!="")  mutation.table$Lineage.P[i]<- add.lineages[i,which(add.lineages[i,]==max(add.lineages[i,]))][1]
     if(mutation.table$Lineage[i]=="")mutation.table$Lineage[i]<-NA
+    if(mutation.table$Lineage[i]!=""){
+   
+      mutation.table$Uniqueness[i]<- 
+               as.numeric(add.lineages[i,])[order(as.numeric(add.lineages[i,]), decreasing = TRUE)][1]-
+               as.numeric(add.lineages[i,])[order(as.numeric(add.lineages[i,]), decreasing = TRUE)][2]
+  } 
     
   }
   
