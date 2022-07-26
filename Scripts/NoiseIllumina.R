@@ -134,7 +134,7 @@ if(length(bamfiles)>0){
     if(length(which(total$Major==total$Minor))>0){
       total<-total[-which(total$Major==total$Minor),]
     }
-    
+    write.csv(total, paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE)
     if(nrow(total)>0) write.csv(total, paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE)
     if(nrow(total)==0) write.table("No Coinfections Found!",paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE, quote = FALSE, col.names = FALSE)
     try(system("rm -rf /Noise/fasta"))

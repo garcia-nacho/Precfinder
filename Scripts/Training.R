@@ -2,7 +2,7 @@ source("/home/docker/Scripts/Functions.R")
 
 args=commandArgs(TRUE)
 
-nc.pg.run(mode="Training")
+nc.pg.run(mode="Training", collapse.lineage="AY")
 mutation.table<-table.generator(df="/Training/Training_dataset.csv")
 
 write.csv(mutation.table, paste("/Models/", args[1], "/", gsub("-","",Sys.Date()),"_MutationTable.csv",sep = ""), row.names = FALSE)
