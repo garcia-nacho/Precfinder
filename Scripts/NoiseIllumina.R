@@ -9,7 +9,6 @@ library("ggplot2")
 library(nnet)
 library(ggpubr)
 library(writexl)
-library(seqinr)
 
  cores<-10
 
@@ -74,7 +73,7 @@ if(length(bamfiles)>0){
       dummy$Outlier<-"NO"
       dummy$Outlier[dummy$Noise>=outlier.co]<-"YES"
       Overall.Noise<-sum(dummy$Noise[dummy$Outlier=="YES"])
-      if(length(which(dummy$Noise>co))>5){
+      if(length(which(dummy$Noise>co))>1){
         
         if(!dir.exists(paste(results,"fasta/",sep = ""))) try(dir.create(paste(results,"fasta/",sep = "")))
         
@@ -87,7 +86,7 @@ if(length(bamfiles)>0){
         dummy$S1[which(dummy$Reads<10)]<-"N"
         
         dummy$S2[which(dummy$Noise<co)]<-dummy$S1[which(dummy$Noise<co)]
-        if(length(which(dummy$S1!=dummy$S2))>5 & length(which(dummy$S1=="N"))<1000){
+        if(length(which(dummy$S1!=dummy$S2))>1 & length(which(dummy$S1=="N"))<1000){
           
           write.fasta(paste(dummy$S1[which(dummy$S1 %in% c("A","T","C","G","N"))], collapse = ""),
                       file.out = gsub("_NoisExtractorResult.tsv","_S1.fa", gsub(".*/",paste(results,"fasta/",sep = ""),results.files[i])), 
@@ -137,7 +136,7 @@ if(length(bamfiles)>0){
     write.csv(total, paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE)
     if(nrow(total)>0) write.csv(total, paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE)
     if(nrow(total)==0) write.table("No Coinfections Found!",paste("/Noise/Coinfection_Results", date,".csv",sep=""), row.names = FALSE, quote = FALSE, col.names = FALSE)
-    try(system("rm -rf /Noise/fasta"))
+    #try(system("rm -rf /Noise/fasta"))
   }
 
   
